@@ -4,7 +4,6 @@ STOP_WORDS = [
     'will', 'with'
 ]
 
-
 def make_lowercase(read_file):
     lowercase_version = []
     for word in read_file:
@@ -15,24 +14,32 @@ def make_lowercase(read_file):
     return lowercase_version
 
 def remove_punctuations(lowercase_version):
+    line_list = []
     for line in lowercase_version:
         no_period = line.replace(".", "")
-        # no_comma = no_period.remove(",")
-        print (line)
+        no_comma = no_period.replace (",", "")
+        no_colon = no_comma.replace (":", "")
+        no_question = no_colon.replace ("?", "")
+        line_list.append (no_question)
+    return line_list
 
-    # no_punctuations = []
-    # expression = [".", ",", "!", "?"]
-    # no_punctuations = l.remove(".")
-    # print (no_punctuations)
-    # for sentence in lowercase_version:
-    #     for 
-    #     no_punctuations.append(lowercase_version)
-    #     print (no_punctuations)
-    #     # expression = [".", ",", "!", "?"]
-    #     # no_punctuations = del [. : , : !]
-    #     # print (no_punctuations)
+def add_to_dictionary(remove_punctuations):
+    word_dictionary = {}
+    word_list = []
+    for line in remove_punctuations:
+        for word in line.split ():
+            word_list.append(word)
+    for word in word_list:
+        word_dictionary[word] = word_list.count(word)
+    return word_dictionary
 
-
+def remove_stop_words (add_to_dictionary):
+    new_dictionary = add_to_dictionary.copy()
+    for word_key in add_to_dictionary.keys():
+        if word_key in STOP_WORDS:
+            del new_dictionary [word_key]
+    print ("HELLO", new_dictionary)
+    return new_dictionary
 
 def print_word_freq(file):
     """Read in `file` and print out the frequency of words in that file."""
@@ -40,15 +47,10 @@ def print_word_freq(file):
     with open (file) as open_file:
             read_file = open_file.readlines()
     lowercase_version = make_lowercase(read_file)
-    remove_punctuations(lowercase_version)
-    print (lowercase_version)
-
-
-
-# - remove punctuation
-# - normalize all words to lowercase
-# - remove "stop words" -- words used so frequently they are ignored
-# - go through the file word by word and keep a count of how often each word is used
+    print_all = remove_punctuations(lowercase_version)
+    word_dict = add_to_dictionary(print_all)
+    last_one = remove_stop_words(word_dict)
+    # print (last_one)
 
 if __name__ == "__main__":
     import argparse
