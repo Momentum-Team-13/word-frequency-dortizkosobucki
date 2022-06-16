@@ -52,7 +52,7 @@ def print_word_freq(file):
     last_one = remove_stop_words(word_dict)
     almost_there = sorted(last_one.items(), key=lambda x: x[1], reverse=True)
     for i in almost_there:
-        print  (f'{i[0]:15} | {i[1]}')
+        print  (f'{i[0]:15} | {i[1]} {"*" * i[1]}')
     # print (last_one)
 
 if __name__ == "__main__":
